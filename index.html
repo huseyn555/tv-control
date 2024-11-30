@@ -3,58 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Gönderme ve Alma</title>
+    <title>TV Kontrol Paneli</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            padding-top: 50px;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
         }
         input {
             padding: 10px;
             font-size: 16px;
-            width: 80%;
-        }
-        button {
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        #urlDisplay {
-            font-size: 18px;
-            margin-top: 20px;
+            width: 300px;
         }
     </style>
 </head>
 <body>
-    <h1>URL Gönderme ve Alma</h1>
-    <h3>Birinci cihaz: URL gönderin</h3>
-    <input type="text" id="url" placeholder="URL girin...">
-    <button onclick="sendURL()">Gönder</button>
 
-    <div id="urlDisplay">Alınan URL burada görünecek...</div>
+<h1>TV Kontrol Paneli</h1>
+<input type="text" id="url" placeholder="URL gir...">
+<button onclick="sendUrl()">Git</button>
+<div id="message" style="margin-top: 20px; color: green;"></div>
 
-    <script>
-        // URL'yi alıp, URL'yi bir query parametre olarak alıcı sayfaya gönder
-        function sendURL() {
-            const url = document.getElementById('url').value;
-            if (url) {
-                // URL'yi query parametre olarak ekliyoruz
-                window.location.href = '/?url=' + encodeURIComponent(url);
-            }
+<script>
+    // URL gönderme fonksiyonu
+    function sendUrl() {
+        var url = document.getElementById('url').value;  // Kullanıcının girdiği URL
+        localStorage.setItem('navigate_url', url);  // URL'yi kaydet
+        
+        // URL'yi göstermek için
+        document.getElementById('message').innerText = 'URL gönderildi: ' + url;
+
+        // Sayfayı otomatik olarak yönlendir
+        window.location.href = url;
+    }
+
+    // Sayfa yüklenince kaydedilen URL'yi otomatik yönlendir
+    window.onload = function() {
+        var storedUrl = localStorage.getItem('navigate_url');
+        if (storedUrl) {
+            window.location.href = storedUrl;
         }
+    };
+</script>
 
-        // URL parametresini alıp alıcı ekranda göster
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const url = urlParams.get('url');
-            if (url) {
-                // URL'yi otomatik olarak yeni sekmede aç
-                window.open(url, '_blank');
-                document.getElementById('urlDisplay').innerHTML = 'Gönderilen URL otomatik olarak açıldı: <a href="' + url + '" target="_blank">' + url + '</a>';
-            }
-        };
-    </script>
 </body>
 </html>
