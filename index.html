@@ -10,46 +10,49 @@
             text-align: center;
             margin-top: 50px;
         }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 18px;
-            cursor: pointer;
-        }
         input {
             padding: 10px;
             font-size: 16px;
             width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            color: green;
         }
     </style>
 </head>
 <body>
 
 <h1>TV Kontrol Paneli</h1>
-<input type="text" id="url" placeholder="URL gir...">
+<input type="text" id="url" placeholder="URL girin...">
 <button onclick="sendUrl()">Git</button>
-<div id="message" style="margin-top: 20px; color: green;"></div>
+<div id="message"></div>
 
 <script>
-    // URL gönderme fonksiyonu
     function sendUrl() {
-        var url = document.getElementById('url').value;  // Kullanıcının girdiği URL
-        localStorage.setItem('navigate_url', url);  // URL'yi kaydet
-        
-        // URL'yi göstermek için
-        document.getElementById('message').innerText = 'URL gönderildi: ' + url;
+        const url = document.getElementById('url').value;
+        if (url) {
+            localStorage.setItem('navigate_url', url);  // URL'yi localStorage'a kaydediyoruz
+            document.getElementById('message').innerText = 'URL gönderildi: ' + url;
 
-        // Sayfayı otomatik olarak yönlendir
-        window.location.href = url;
+            // Diğer cihazdan açılması için yönlendirme işlemi
+            window.location.href = url;
+        } else {
+            alert('Lütfen geçerli bir URL girin.');
+        }
     }
 
-    // Sayfa yüklenince kaydedilen URL'yi otomatik yönlendir
-    window.onload = function() {
-        var storedUrl = localStorage.getItem('navigate_url');
-        if (storedUrl) {
-            window.location.href = storedUrl;
-        }
-    };
+    // Sayfa her yüklendiğinde URL'yi kontrol et
+    const storedUrl = localStorage.getItem('navigate_url');
+    if (storedUrl) {
+        window.location.href = storedUrl; // Eğer URL kaydedildiyse otomatik olarak yönlendirme yap
+    }
 </script>
 
 </body>
