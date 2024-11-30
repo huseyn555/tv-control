@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TV Kontrol Paneli</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; margin: 10px; font-size: 18px; cursor: pointer; }
+        input { padding: 10px; font-size: 16px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>TV Kontrol Paneli</h1>
+    <input type="text" id="url" placeholder="URL gir..." />
+    <button onclick="sendUrl()">Git</button>
+    <div id="message" style="margin-top: 20px; color: green;"></div>
+
+    <script>
+        // Basit URL gönderme
+        function sendUrl() {
+            const url = document.getElementById('url').value;
+            localStorage.setItem('navigate_url', url); // URL'yi kaydet
+            document.getElementById('message').innerText = `URL gönderildi: ${url}`;
+        }
+
+        // Gelen URL'yi otomatik olarak yönlendirme
+        window.onload = function() {
+            const storedUrl = localStorage.getItem('navigate_url');
+            if (storedUrl) {
+                window.location.href = storedUrl; // Gelen URL'ye yönlendirme
+            }
+        };
+    </script>
+</body>
+</html>
