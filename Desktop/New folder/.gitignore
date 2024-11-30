@@ -1,0 +1,14 @@
+# Sistemi ilgilendiren dosyalar
+AppData/
+node_modules/
+*.log
+*.tmp
+
+# Derleme dosyaları
+dist/
+build/
+
+# IDE ve editör dosyaları
+.vscode/
+.idea/
+*.swp
